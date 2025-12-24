@@ -1,562 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Untuk Bila - Sebuah Kenangan di Akhir 2025</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&family=Gochi+Hand&family=Indie+Flower&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sebuah Awal</title>
 
-        body {
-            font-family: 'Indie Flower', cursive;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
+  <!-- Handwritten Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
 
-        /* Musik player */
-        #music-player {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 100;
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 50px;
-            padding: 8px 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Handlee', cursive;
+    }
 
-        #music-btn {
-            background: none;
-            border: none;
-            font-size: 22px;
-            color: #e75480;
-            cursor: pointer;
-            margin-right: 8px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    body {
+      background: #0f0f0f;
+      overflow: hidden;
+    }
 
-        #music-btn i {
-            display: block;
-        }
+    .slider {
+      display: flex;
+      width: 700vw;
+      height: 100vh;
+      transition: transform 0.5s ease-in-out;
+    }
 
-        #music-btn .fa-play {
-            display: none;
-        }
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: 40px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #fff;
+    }
 
-        #music-btn.playing .fa-play {
-            display: block;
-        }
+    .slide h1 {
+      font-size: 32px;
+      margin-bottom: 18px;
+    }
 
-        #music-btn.playing .fa-pause {
-            display: none;
-        }
+    .slide p {
+      font-size: 20px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
 
-        #music-text {
-            font-family: 'Gochi Hand', cursive;
-            font-size: 14px;
-            color: #555;
-            white-space: nowrap;
-        }
+    /* Background colors per slide */
+    .s1 { background: linear-gradient(135deg, #1f4037, #99f2c8); }
+    .s2 { background: linear-gradient(135deg, #2c3e50, #4ca1af); }
+    .s3 { background: linear-gradient(135deg, #232526, #414345); }
+    .s4 { background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b); }
+    .s5 { background: linear-gradient(135deg, #141e30, #243b55); }
+    .s6 { background: linear-gradient(135deg, #000428, #004e92); }
+    .s7 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
 
-        /* Container slider */
-        .slider-container {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+    /* Indicator */
+    .indicator {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
 
-        /* Slider */
-        .slider {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s ease;
-        }
+    .dot {
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 50%;
+    }
 
-        /* Slide */
-        .slide {
-            min-width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        /* Warna background berbeda untuk setiap slide */
-        .slide:nth-child(1) { background-color: rgba(255, 245, 250, 0.9); }
-        .slide:nth-child(2) { background-color: rgba(255, 250, 245, 0.9); }
-        .slide:nth-child(3) { background-color: rgba(245, 255, 250, 0.9); }
-        .slide:nth-child(4) { background-color: rgba(250, 245, 255, 0.9); }
-        .slide:nth-child(5) { background-color: rgba(245, 250, 255, 0.9); }
-        .slide:nth-child(6) { background-color: rgba(255, 255, 245, 0.9); }
-        .slide:nth-child(7) { background-color: rgba(250, 255, 245, 0.9); }
-
-        /* Konten slide */
-        .slide-content {
-            max-width: 85%;
-            background-color: rgba(255, 255, 255, 0.85);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Judul slide */
-        .slide-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #e75480;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .slide-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #e75480, transparent);
-        }
-
-        /* Pesan slide */
-        .slide-message {
-            font-family: 'Indie Flower', cursive;
-            font-size: 1.4rem;
-            line-height: 1.6;
-            color: #333;
-            text-align: center;
-        }
-
-        /* Highlight nama */
-        .name-highlight {
-            color: #e75480;
-            font-weight: bold;
-            font-family: 'Gochi Hand', cursive;
-        }
-
-        /* Dekorasi */
-        .decorations {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .heart, .star, .circle {
-            position: absolute;
-            opacity: 0.3;
-            color: #e75480;
-        }
-
-        .heart { font-size: 24px; }
-        .star { font-size: 20px; }
-        .circle { font-size: 18px; }
-
-        /* Navigasi */
-        .nav-dots {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background-color: rgba(231, 84, 128, 0.3);
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background-color: #e75480;
-            transform: scale(1.2);
-        }
-
-        /* Navigasi panah */
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.8);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            color: #e75480;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .nav-arrow:hover {
-            background-color: rgba(231, 84, 128, 0.9);
-            color: white;
-        }
-
-        .nav-arrow.prev {
-            left: 10px;
-        }
-
-        .nav-arrow.next {
-            right: 10px;
-        }
-
-        /* Instruksi */
-        .instructions {
-            position: absolute;
-            bottom: 50px;
-            width: 100%;
-            text-align: center;
-            font-family: 'Gochi Hand', cursive;
-            font-size: 0.9rem;
-            color: #777;
-            z-index: 10;
-        }
-
-        /* Responsif untuk layar kecil */
-        @media (max-width: 480px) {
-            .slide-title {
-                font-size: 1.8rem;
-            }
-            
-            .slide-message {
-                font-size: 1.2rem;
-            }
-            
-            .slide-content {
-                max-width: 90%;
-                padding: 20px;
-            }
-            
-            .nav-arrow {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    .dot.active {
+      background: #fff;
+    }
+  </style>
 </head>
 <body>
-    <!-- Musik player -->
-    <div id="music-player">
-        <button id="music-btn" class="playing">
-            <i class="fas fa-pause"></i>
-            <i class="fas fa-play"></i>
-        </button>
-        <span id="music-text">Musik: Angel - Diorama</span>
-    </div>
 
-    <!-- Container slider -->
-    <div class="slider-container">
-        <!-- Slider -->
-        <div class="slider">
-            <!-- Slide 1 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-1"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Sebuah Awal</h1>
-                    <p class="slide-message">Hai <span class="name-highlight">Bila</span>, sebelum 2025 benar-benar berakhir, aku mau berhenti sebentar buat bilang satu hal penting: aku bersyukur karena tahun ini aku ketemu kamu.</p>
-                </div>
-            </div>
+<!-- Background Music (Hidden, start 2:13) -->
+<iframe
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/bzRMneypG04?start=133&autoplay=1&loop=1&playlist=bzRMneypG04"
+  frameborder="0"
+  allow="autoplay"
+></iframe>
 
-            <!-- Slide 2 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-2"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Kehadiranmu</h1>
-                    <p class="slide-message">Di tahun yang capek dan penuh ragu, kamu datang tanpa ribut, tapi bikin tenang. Lewat hal-hal sederhana, kamu bikin hariku terasa lebih ringan.</p>
-                </div>
-            </div>
+<div class="slider" id="slider">
 
-            <!-- Slide 3 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-3"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Perasaan</h1>
-                    <p class="slide-message">Aku mungkin bukan orang yang paling pandai merangkai kata, tapi aku serius dengan apa yang aku rasakan. Nyaman, cukup, dan ingin terus aku jaga.</p>
-                </div>
-            </div>
+  <div class="slide s1">
+    <h1>Sebuah Awal</h1>
+    <p>Hai Bila,<br><br>
+    sebelum 2025 benar-benar berakhir, aku mau berhenti sebentar buat bilang satu hal penting:
+    aku bersyukur karena tahun ini aku ketemu kamu.</p>
+  </div>
 
-            <!-- Slide 4 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-4"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Diri Sendiri</h1>
-                    <p class="slide-message">Aku tahu aku belum sempurna. Masih sering salah paham, kadang kurang peka, tapi aku mau terus belajar jadi versi yang lebih baik.</p>
-                </div>
-            </div>
+  <div class="slide s2">
+    <h1>Kehadiranmu</h1>
+    <p>Di tahun yang capek dan penuh ragu, kamu datang tanpa ribut, tapi bikin tenang.<br><br>
+    Lewat hal-hal sederhana, kamu bikin hariku terasa lebih ringan.</p>
+  </div>
 
-            <!-- Slide 5 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-5"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Menuju 2026</h1>
-                    <p class="slide-message">Di 2026 nanti, aku harap kamu jadi versi diri yang lebih baik, lebih tenang, lebih kuat, lebih bahagia. Jaga kesehatan, cukup istirahat, dan jangan lupa jaga diri kamu.</p>
-                </div>
-            </div>
+  <div class="slide s3">
+    <h1>Perasaan</h1>
+    <p>Aku mungkin bukan orang yang paling pandai merangkai kata,
+    tapi aku serius dengan apa yang aku rasakan.<br><br>
+    Nyaman, cukup, dan ingin terus aku jaga.</p>
+  </div>
 
-            <!-- Slide 6 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-6"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Dalam Doa Orang Tua</h1>
-                    <p class="slide-message">Satu hal yang selalu aku doakan: semoga kamu tetap manut sama orang tua, karena di doa mereka ada jalan paling aman untuk langkah kamu ke depan.</p>
-                </div>
-            </div>
+  <div class="slide s4">
+    <h1>Diri Sendiri</h1>
+    <p>Aku tahu aku belum sempurna.<br>
+    Masih sering salah paham, kadang kurang peka,
+    tapi aku mau terus belajar jadi versi yang lebih baik.</p>
+  </div>
 
-            <!-- Slide 7 -->
-            <div class="slide">
-                <div class="decorations" id="decorations-7"></div>
-                <div class="slide-content">
-                    <h1 class="slide-title">Us</h1>
-                    <p class="slide-message">Sebelum 2025 benar-benar pamit, biar satu hal ini tinggal: aku sayang kamu, <span class="name-highlight">Bila</span>. Terima kasih sudah jadi bagian dari tahunku. Semoga ke depan, kita masih saling memilih.</p>
-                </div>
-            </div>
-        </div>
+  <div class="slide s5">
+    <h1>Menuju 2026</h1>
+    <p>Di 2026 nanti, aku harap kamu jadi versi diri yang lebih baik,
+    lebih tenang, lebih kuat, lebih bahagia.<br><br>
+    Jaga kesehatan, cukup istirahat, dan jangan lupa jaga diri kamu.</p>
+  </div>
 
-        <!-- Navigasi panah -->
-        <button class="nav-arrow prev">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="nav-arrow next">
-            <i class="fas fa-chevron-right"></i>
-        </button>
+  <div class="slide s6">
+    <h1>Dalam Doa Orang Tua</h1>
+    <p>Satu hal yang selalu aku doakan:
+    semoga kamu tetap manut sama orang tua,
+    karena di doa mereka ada jalan paling aman
+    untuk langkah kamu ke depan.</p>
+  </div>
 
-        <!-- Navigasi dots -->
-        <div class="nav-dots">
-            <!-- Dots akan di-generate oleh JavaScript -->
-        </div>
+  <div class="slide s7">
+    <h1>Us</h1>
+    <p>Sebelum 2025 benar-benar pamit, biar satu hal ini tinggal:<br><br>
+    aku sayang kamu, Bila.<br>
+    Terima kasih sudah jadi bagian dari tahunku.<br><br>
+    Semoga ke depan, kita masih saling memilih.</p>
+  </div>
 
-        <!-- Instruksi -->
-        <div class="instructions">Geser atau klik panah untuk navigasi</div>
-    </div>
+</div>
 
-    <!-- Audio untuk musik latar -->
-    <audio id="bg-music" loop>
-        <!-- Saya akan menggunakan audio dari YouTube yang sudah di-extract -->
-        <!-- Karena keterbatasan, saya menggunakan musik alternatif yang mirip -->
-        <source src="https://assets.mixkit.co/music/preview/mixkit-angelic-descent-280.mp3" type="audio/mpeg">
-        Browser Anda tidak mendukung elemen audio.
-    </audio>
+<div class="indicator" id="indicator"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elemen slider
-            const slider = document.querySelector('.slider');
-            const slides = document.querySelectorAll('.slide');
-            const prevBtn = document.querySelector('.nav-arrow.prev');
-            const nextBtn = document.querySelector('.nav-arrow.next');
-            const dotsContainer = document.querySelector('.nav-dots');
-            const musicBtn = document.getElementById('music-btn');
-            const bgMusic = document.getElementById('bg-music');
-            const musicText = document.getElementById('music-text');
-            
-            let currentSlide = 0;
-            const totalSlides = slides.length;
-            
-            // Inisialisasi musik dari timestamp 2:13 (133 detik)
-            bgMusic.currentTime = 133;
-            
-            // Set volume menjadi transparan/rendah
-            bgMusic.volume = 0.4;
-            
-            // Buat dots navigasi
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.dataset.index = i;
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
-            }
-            
-            // Tambahkan dekorasi untuk setiap slide
-            addDecorations();
-            
-            // Fungsi untuk menambahkan dekorasi ke setiap slide
-            function addDecorations() {
-                for (let i = 1; i <= totalSlides; i++) {
-                    const container = document.getElementById(`decorations-${i}`);
-                    if (!container) continue;
-                    
-                    // Tambahkan beberapa dekorasi acak
-                    for (let j = 0; j < 15; j++) {
-                        const types = ['heart', 'star', 'circle'];
-                        const type = types[Math.floor(Math.random() * types.length)];
-                        
-                        const decoration = document.createElement('div');
-                        decoration.classList.add(type);
-                        
-                        // Set posisi acak
-                        const left = Math.random() * 100;
-                        const top = Math.random() * 100;
-                        
-                        decoration.style.left = `${left}%`;
-                        decoration.style.top = `${top}%`;
-                        
-                        // Set ukuran sedikit acak
-                        const size = 15 + Math.random() * 20;
-                        decoration.style.fontSize = `${size}px`;
-                        
-                        // Set warna dengan variasi acak
-                        const hue = 330 + Math.random() * 30; // Warna pink-ish
-                        const opacity = 0.2 + Math.random() * 0.3;
-                        decoration.style.color = `hsla(${hue}, 70%, 65%, ${opacity})`;
-                        
-                        // Animasi berkedip lembut
-                        const duration = 3 + Math.random() * 5;
-                        decoration.style.animation = `float ${duration}s infinite ease-in-out`;
-                        
-                        container.appendChild(decoration);
-                    }
-                }
-                
-                // Tambahkan CSS untuk animasi
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes float {
-                        0%, 100% { transform: translateY(0) rotate(0deg); }
-                        50% { transform: translateY(-10px) rotate(5deg); }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // Fungsi untuk pergi ke slide tertentu
-            function goToSlide(index) {
-                if (index < 0) index = totalSlides - 1;
-                if (index >= totalSlides) index = 0;
-                
-                currentSlide = index;
-                slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Update dots
-                document.querySelectorAll('.dot').forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-            
-            // Event listener untuk tombol navigasi
-            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
-            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-            
-            // Event listener untuk musik
-            musicBtn.addEventListener('click', function() {
-                if (bgMusic.paused) {
-                    bgMusic.play();
-                    musicBtn.classList.add('playing');
-                    musicText.textContent = "Musik: Angel - Diorama (Putar)";
-                } else {
-                    bgMusic.pause();
-                    musicBtn.classList.remove('playing');
-                    musicText.textContent = "Musik: Angel - Diorama (Jeda)";
-                }
-            });
-            
-            // Autoplay musik dengan interaksi pengguna
-            document.body.addEventListener('click', function initAudio() {
-                if (bgMusic.paused) {
-                    bgMusic.play().then(() => {
-                        musicBtn.classList.add('playing');
-                        musicText.textContent = "Musik: Angel - Diorama (Putar)";
-                    }).catch(e => {
-                        console.log("Autoplay diblokir, membutuhkan interaksi pengguna");
-                    });
-                    // Hapus event listener setelah interaksi pertama
-                    document.body.removeEventListener('click', initAudio);
-                }
-            }, { once: true });
-            
-            // Swipe untuk mobile
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            sliderContainer = document.querySelector('.slider-container');
-            
-            sliderContainer.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-            
-            sliderContainer.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-                
-                if (Math.abs(diff) > swipeThreshold) {
-                    if (diff > 0) {
-                        // Swipe kiri, ke slide berikutnya
-                        goToSlide(currentSlide + 1);
-                    } else {
-                        // Swipe kanan, ke slide sebelumnya
-                        goToSlide(currentSlide - 1);
-                    }
-                }
-            }
-            
-            // Tambahkan juga event listener untuk keyboard
-            document.addEventListener('keydown', e => {
-                if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
-                if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
-                if (e.key === ' ') {
-                    e.preventDefault();
-                    musicBtn.click();
-                }
-            });
-        });
-    </script>
+<script>
+  const slider = document.getElementById("slider");
+  const indicator = document.getElementById("indicator");
+  let current = 0;
+  const total = 7;
+
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement("div");
+    dot.className = "dot" + (i === 0 ? " active" : "");
+    indicator.appendChild(dot);
+  }
+
+  const dots = document.querySelectorAll(".dot");
+
+  let startX = 0;
+
+  document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+  });
+
+  document.addEventListener("touchend", e => {
+    const endX = e.changedTouches[0].clientX;
+    if (startX - endX > 50 && current < total - 1) current++;
+    if (endX - startX > 50 && current > 0) current--;
+    update();
+  });
+
+  function update() {
+    slider.style.transform = `translateX(-${current * 100}vw)`;
+    dots.forEach((d, i) => d.classList.toggle("active", i === current));
+    document.title = document.querySelectorAll(".slide h1")[current].innerText;
+  }
+</script>
+
 </body>
 </html>
