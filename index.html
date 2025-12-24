@@ -5,14 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sebuah Awal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+<!-- Handwritten font (lebih jelas) -->
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Handlee', cursive;
+  font-family: 'Caveat', cursive;
 }
 
 body {
@@ -20,48 +21,61 @@ body {
   background: black;
 }
 
+/* ===== VIDEO BACKGROUND ===== */
+.video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video-bg iframe {
+  width: 120vw;
+  height: 120vh;
+  position: absolute;
+  top: -10vh;
+  left: -10vw;
+  filter: blur(8px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ===== SLIDER ===== */
 .wrapper {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  touch-action: pan-y;
 }
 
 .slider {
   display: flex;
   height: 100%;
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
 .slide {
   min-width: 100vw;
   height: 100vh;
-  padding: 40px 28px;
+  padding: 42px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
+  background: rgba(0,0,0,0.35);
 }
 
 .slide h1 {
-  font-size: 32px;
-  margin-bottom: 16px;
+  font-size: 36px;
+  margin-bottom: 18px;
 }
 
 .slide p {
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1.6;
 }
 
-/* background */
-.s1 { background: #1f4037; }
-.s2 { background: #2c3e50; }
-.s3 { background: #232526; }
-.s4 { background: #3a1c71; }
-.s5 { background: #141e30; }
-.s6 { background: #000428; }
-.s7 { background: #0f2027; }
-
-/* dots */
+/* ===== DOTS ===== */
 .dots {
   position: fixed;
   bottom: 18px;
@@ -82,43 +96,45 @@ body {
   background: white;
 }
 
-/* tap to start */
+/* ===== TAP SCREEN ===== */
 .tap {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.85);
   color: white;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  z-index: 10;
-  padding: 20px;
 }
 </style>
 </head>
 <body>
 
+<!-- TAP TO START -->
 <div class="tap" id="tap">
   <div>
-    <h2>Tap layar sekali</h2>
-    <p>untuk mulai & memutar musik</p>
+    <h2>Tap sekali</h2>
+    <p>untuk memulai & memutar musik</p>
   </div>
 </div>
 
-<!-- MUSIC -->
-<iframe
-  id="music"
-  width="0"
-  height="0"
-  src=""
-  allow="autoplay"
-></iframe>
+<!-- VIDEO BACKGROUND -->
+<div class="video-bg">
+  <iframe
+    id="video"
+    src=""
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+  ></iframe>
+</div>
 
+<!-- SLIDER -->
 <div class="wrapper" id="wrapper">
   <div class="slider" id="slider">
 
-    <div class="slide s1">
+    <div class="slide">
       <h1>Sebuah Awal</h1>
       <p>Hai Bila,<br><br>
       sebelum 2025 benar-benar berakhir,
@@ -126,7 +142,7 @@ body {
       aku bersyukur karena tahun ini aku ketemu kamu.</p>
     </div>
 
-    <div class="slide s2">
+    <div class="slide">
       <h1>Kehadiranmu</h1>
       <p>Di tahun yang capek dan penuh ragu,
       kamu datang tanpa ribut, tapi bikin tenang.<br><br>
@@ -134,14 +150,14 @@ body {
       kamu bikin hariku terasa lebih ringan.</p>
     </div>
 
-    <div class="slide s3">
+    <div class="slide">
       <h1>Perasaan</h1>
       <p>Aku mungkin bukan orang yang paling pandai merangkai kata,
       tapi aku serius dengan apa yang aku rasakan.<br><br>
       Nyaman, cukup, dan ingin terus aku jaga.</p>
     </div>
 
-    <div class="slide s4">
+    <div class="slide">
       <h1>Diri Sendiri</h1>
       <p>Aku tahu aku belum sempurna.
       Masih sering salah paham,
@@ -149,7 +165,7 @@ body {
       tapi aku mau terus belajar jadi versi yang lebih baik.</p>
     </div>
 
-    <div class="slide s5">
+    <div class="slide">
       <h1>Menuju 2026</h1>
       <p>Di 2026 nanti,
       aku harap kamu jadi versi diri yang lebih baik,
@@ -158,7 +174,7 @@ body {
       dan jangan lupa jaga diri kamu.</p>
     </div>
 
-    <div class="slide s6">
+    <div class="slide">
       <h1>Dalam Doa Orang Tua</h1>
       <p>Satu hal yang selalu aku doakan:
       semoga kamu tetap manut sama orang tua,
@@ -166,10 +182,9 @@ body {
       untuk langkah kamu ke depan.</p>
     </div>
 
-    <div class="slide s7">
+    <div class="slide">
       <h1>Us</h1>
-      <p>Sebelum 2025 benar-benar pamit,
-      biar satu hal ini tinggal:<br><br>
+      <p>Sebelum 2025 benar-benar pamit,<br><br>
       aku sayang kamu, Bila.<br>
       Terima kasih sudah jadi bagian dari tahunku.<br><br>
       Semoga ke depan, kita masih saling memilih.</p>
@@ -200,25 +215,27 @@ function update() {
   );
 }
 
-// swipe
+// swipe (FIXED)
 let startX = 0;
 
-document.getElementById("wrapper").addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-});
+const wrapper = document.getElementById("wrapper");
 
-document.getElementById("wrapper").addEventListener("touchend", e => {
+wrapper.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive: true });
+
+wrapper.addEventListener("touchend", e => {
   const endX = e.changedTouches[0].clientX;
   if (startX - endX > 50 && current < total - 1) current++;
   if (endX - startX > 50 && current > 0) current--;
   update();
 });
 
-// tap to start music
+// tap to start video + music
 document.getElementById("tap").addEventListener("click", () => {
   document.getElementById("tap").style.display = "none";
-  document.getElementById("music").src =
-    "https://www.youtube.com/embed/bzRMneypG04?start=133&autoplay=1&loop=1&playlist=bzRMneypG04";
+  document.getElementById("video").src =
+    "https://www.youtube.com/embed/bzRMneypG04?start=133&autoplay=1&mute=0&loop=1&playlist=bzRMneypG04&controls=0&playsinline=1";
 });
 </script>
 
