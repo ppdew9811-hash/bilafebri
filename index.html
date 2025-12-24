@@ -1,184 +1,225 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sebuah Awal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebuah Awal</title>
 
-  <!-- Handwritten Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Handlee', cursive;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Handlee', cursive;
+}
 
-    body {
-      background: #0f0f0f;
-      overflow: hidden;
-    }
+body {
+  overflow: hidden;
+  background: black;
+}
 
-    .slider {
-      display: flex;
-      width: 700vw;
-      height: 100vh;
-      transition: transform 0.5s ease-in-out;
-    }
+.wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
-    .slide {
-      width: 100vw;
-      height: 100vh;
-      padding: 40px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      color: #fff;
-    }
+.slider {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
 
-    .slide h1 {
-      font-size: 32px;
-      margin-bottom: 18px;
-    }
+.slide {
+  min-width: 100vw;
+  height: 100vh;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
 
-    .slide p {
-      font-size: 20px;
-      line-height: 1.6;
-      opacity: 0.95;
-    }
+.slide h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
 
-    /* Background colors per slide */
-    .s1 { background: linear-gradient(135deg, #1f4037, #99f2c8); }
-    .s2 { background: linear-gradient(135deg, #2c3e50, #4ca1af); }
-    .s3 { background: linear-gradient(135deg, #232526, #414345); }
-    .s4 { background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b); }
-    .s5 { background: linear-gradient(135deg, #141e30, #243b55); }
-    .s6 { background: linear-gradient(135deg, #000428, #004e92); }
-    .s7 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+.slide p {
+  font-size: 20px;
+  line-height: 1.6;
+}
 
-    /* Indicator */
-    .indicator {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-    }
+/* background */
+.s1 { background: #1f4037; }
+.s2 { background: #2c3e50; }
+.s3 { background: #232526; }
+.s4 { background: #3a1c71; }
+.s5 { background: #141e30; }
+.s6 { background: #000428; }
+.s7 { background: #0f2027; }
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      background: rgba(255,255,255,0.4);
-      border-radius: 50%;
-    }
+/* dots */
+.dots {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
 
-    .dot.active {
-      background: #fff;
-    }
-  </style>
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+}
+
+.dot.active {
+  background: white;
+}
+
+/* tap to start */
+.tap {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10;
+  padding: 20px;
+}
+</style>
 </head>
 <body>
 
-<!-- Background Music (Hidden, start 2:13) -->
+<div class="tap" id="tap">
+  <div>
+    <h2>Tap layar sekali</h2>
+    <p>untuk mulai & memutar musik</p>
+  </div>
+</div>
+
+<!-- MUSIC -->
 <iframe
+  id="music"
   width="0"
   height="0"
-  src="https://www.youtube.com/embed/bzRMneypG04?start=133&autoplay=1&loop=1&playlist=bzRMneypG04"
-  frameborder="0"
+  src=""
   allow="autoplay"
 ></iframe>
 
-<div class="slider" id="slider">
+<div class="wrapper" id="wrapper">
+  <div class="slider" id="slider">
 
-  <div class="slide s1">
-    <h1>Sebuah Awal</h1>
-    <p>Hai Bila,<br><br>
-    sebelum 2025 benar-benar berakhir, aku mau berhenti sebentar buat bilang satu hal penting:
-    aku bersyukur karena tahun ini aku ketemu kamu.</p>
+    <div class="slide s1">
+      <h1>Sebuah Awal</h1>
+      <p>Hai Bila,<br><br>
+      sebelum 2025 benar-benar berakhir,
+      aku mau berhenti sebentar buat bilang satu hal penting:
+      aku bersyukur karena tahun ini aku ketemu kamu.</p>
+    </div>
+
+    <div class="slide s2">
+      <h1>Kehadiranmu</h1>
+      <p>Di tahun yang capek dan penuh ragu,
+      kamu datang tanpa ribut, tapi bikin tenang.<br><br>
+      Lewat hal-hal sederhana,
+      kamu bikin hariku terasa lebih ringan.</p>
+    </div>
+
+    <div class="slide s3">
+      <h1>Perasaan</h1>
+      <p>Aku mungkin bukan orang yang paling pandai merangkai kata,
+      tapi aku serius dengan apa yang aku rasakan.<br><br>
+      Nyaman, cukup, dan ingin terus aku jaga.</p>
+    </div>
+
+    <div class="slide s4">
+      <h1>Diri Sendiri</h1>
+      <p>Aku tahu aku belum sempurna.
+      Masih sering salah paham,
+      kadang kurang peka,
+      tapi aku mau terus belajar jadi versi yang lebih baik.</p>
+    </div>
+
+    <div class="slide s5">
+      <h1>Menuju 2026</h1>
+      <p>Di 2026 nanti,
+      aku harap kamu jadi versi diri yang lebih baik,
+      lebih tenang, lebih kuat, lebih bahagia.<br><br>
+      Jaga kesehatan, cukup istirahat,
+      dan jangan lupa jaga diri kamu.</p>
+    </div>
+
+    <div class="slide s6">
+      <h1>Dalam Doa Orang Tua</h1>
+      <p>Satu hal yang selalu aku doakan:
+      semoga kamu tetap manut sama orang tua,
+      karena di doa mereka ada jalan paling aman
+      untuk langkah kamu ke depan.</p>
+    </div>
+
+    <div class="slide s7">
+      <h1>Us</h1>
+      <p>Sebelum 2025 benar-benar pamit,
+      biar satu hal ini tinggal:<br><br>
+      aku sayang kamu, Bila.<br>
+      Terima kasih sudah jadi bagian dari tahunku.<br><br>
+      Semoga ke depan, kita masih saling memilih.</p>
+    </div>
+
   </div>
-
-  <div class="slide s2">
-    <h1>Kehadiranmu</h1>
-    <p>Di tahun yang capek dan penuh ragu, kamu datang tanpa ribut, tapi bikin tenang.<br><br>
-    Lewat hal-hal sederhana, kamu bikin hariku terasa lebih ringan.</p>
-  </div>
-
-  <div class="slide s3">
-    <h1>Perasaan</h1>
-    <p>Aku mungkin bukan orang yang paling pandai merangkai kata,
-    tapi aku serius dengan apa yang aku rasakan.<br><br>
-    Nyaman, cukup, dan ingin terus aku jaga.</p>
-  </div>
-
-  <div class="slide s4">
-    <h1>Diri Sendiri</h1>
-    <p>Aku tahu aku belum sempurna.<br>
-    Masih sering salah paham, kadang kurang peka,
-    tapi aku mau terus belajar jadi versi yang lebih baik.</p>
-  </div>
-
-  <div class="slide s5">
-    <h1>Menuju 2026</h1>
-    <p>Di 2026 nanti, aku harap kamu jadi versi diri yang lebih baik,
-    lebih tenang, lebih kuat, lebih bahagia.<br><br>
-    Jaga kesehatan, cukup istirahat, dan jangan lupa jaga diri kamu.</p>
-  </div>
-
-  <div class="slide s6">
-    <h1>Dalam Doa Orang Tua</h1>
-    <p>Satu hal yang selalu aku doakan:
-    semoga kamu tetap manut sama orang tua,
-    karena di doa mereka ada jalan paling aman
-    untuk langkah kamu ke depan.</p>
-  </div>
-
-  <div class="slide s7">
-    <h1>Us</h1>
-    <p>Sebelum 2025 benar-benar pamit, biar satu hal ini tinggal:<br><br>
-    aku sayang kamu, Bila.<br>
-    Terima kasih sudah jadi bagian dari tahunku.<br><br>
-    Semoga ke depan, kita masih saling memilih.</p>
-  </div>
-
 </div>
 
-<div class="indicator" id="indicator"></div>
+<div class="dots" id="dots"></div>
 
 <script>
-  const slider = document.getElementById("slider");
-  const indicator = document.getElementById("indicator");
-  let current = 0;
-  const total = 7;
+let current = 0;
+const total = 7;
+const slider = document.getElementById("slider");
+const dots = document.getElementById("dots");
 
-  for (let i = 0; i < total; i++) {
-    const dot = document.createElement("div");
-    dot.className = "dot" + (i === 0 ? " active" : "");
-    indicator.appendChild(dot);
-  }
+// dots
+for (let i = 0; i < total; i++) {
+  const d = document.createElement("div");
+  d.className = "dot" + (i === 0 ? " active" : "");
+  dots.appendChild(d);
+}
 
-  const dots = document.querySelectorAll(".dot");
+function update() {
+  slider.style.transform = `translateX(-${current * 100}vw)`;
+  document.querySelectorAll(".dot").forEach((d, i) =>
+    d.classList.toggle("active", i === current)
+  );
+}
 
-  let startX = 0;
+// swipe
+let startX = 0;
 
-  document.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-  });
+document.getElementById("wrapper").addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
 
-  document.addEventListener("touchend", e => {
-    const endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50 && current < total - 1) current++;
-    if (endX - startX > 50 && current > 0) current--;
-    update();
-  });
+document.getElementById("wrapper").addEventListener("touchend", e => {
+  const endX = e.changedTouches[0].clientX;
+  if (startX - endX > 50 && current < total - 1) current++;
+  if (endX - startX > 50 && current > 0) current--;
+  update();
+});
 
-  function update() {
-    slider.style.transform = `translateX(-${current * 100}vw)`;
-    dots.forEach((d, i) => d.classList.toggle("active", i === current));
-    document.title = document.querySelectorAll(".slide h1")[current].innerText;
-  }
+// tap to start music
+document.getElementById("tap").addEventListener("click", () => {
+  document.getElementById("tap").style.display = "none";
+  document.getElementById("music").src =
+    "https://www.youtube.com/embed/bzRMneypG04?start=133&autoplay=1&loop=1&playlist=bzRMneypG04";
+});
 </script>
 
 </body>
